@@ -15,7 +15,7 @@
         "settings": {
           "mobile_menu_title": "Menu",
           "menu": "main-menu",
-          "image_with_text_image": "shopify:\/\/shop_images\/person-stands-on-rocks-poking-out-of-the-ocean-shoreline.jpg",
+          "logo_image": "shopify:\/\/shop_images\/person-stands-on-rocks-poking-out-of-the-ocean-shoreline.jpg",
           "header_layout": "left"
         }
       }
