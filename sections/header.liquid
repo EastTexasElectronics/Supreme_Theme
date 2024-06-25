@@ -134,16 +134,154 @@
 </div>
 
 {% schema %}
-{
-  "name": "Header (Navbar)",
-  "settings": [
-    {
-      "type": "text",
-      "id": "mobile_menu_title",
-      "label": "Title",
-      "default": "Menu",
-      "info": "This is the title that appears in the mobile menu."
-    }
-  ]
-}
-{% endschema %}
+  {
+    "name": "Header (Navbar)",
+    "settings": [
+      {
+        "type": "text",
+        "id": "mobile_menu_title",
+        "label": "Title",
+        "default": "Menu",
+        "info": "This is the title that appears in the mobile menu."
+      },
+      {
+        "type": "link_list",
+        "id": "menu",
+        "label": "Header Menu",
+        "default": "main-menu",
+        "info": "This is the main menu that appears in the mobile menu."
+      },
+      {
+        "type": "select",
+        "id": "logo_position",
+        "options": [
+          {
+            "value": "left",
+            "label": "On the Left Side"
+          },
+          {
+            "value": "center",
+            "label": "In the Middle"
+          },
+          {
+            "value": "right",
+            "label": "On the Right Side"
+          }
+        ],
+        "default": "center",
+        "label": "Logo/Title Position",
+        "info": "Set the position of the logo/title in the header."
+      },
+      {
+        "type": "select",
+        "id": "desktop_menu_selection",
+        "options": [
+          {
+            "value": "dropdown",
+            "label": "Dropdown Menu"
+          },
+          {
+            "value": "mega",
+            "label": "Mega Menu"
+          },
+          {
+            "value": "drawer",
+            "label": "Drawer Menu"
+          }
+        ],
+        "default": "dropdown",
+        "label": "Desktop Menu Type",
+        "info": "Set the type of menu for the desktop version of the header."
+      },
+      {
+        "type": "select",
+        "id": "sticky_header",
+        "options": [
+          {
+            "value": "none",
+            "label": "Header is not sticky"
+          },
+          {
+            "value": "on-scroll-up",
+            "label": "Header is sticky when scrolling up"
+          },
+          {
+            "value": "always",
+            "label": "Header is always sticky"
+          },
+          {
+            "value": "reduce-logo-size",
+            "label": "Reduce logo size when scrolling up"
+          }
+        ],
+        "default": "on-scroll-up",
+        "label": "Sticky Header",
+        "info": "Set the type of sticky header for the desktop version of the header."
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_country_selector",
+        "default": false,
+        "label": "Enable the Country Selector in the Header"
+      },
+      {
+        "type": "select",
+        "id": "mobile_logo_position",
+        "options": [
+          {
+            "value": "center",
+            "label": "Logo is centered"
+          },
+          {
+            "value": "left",
+            "label": "Logo is on the left side"
+          },
+          {
+            "value": "right",
+            "label": "Logo is on the right side"
+          }
+        ],
+        "default": "center",
+        "label": "Mobile Logo Position"
+      },
+      {
+        "type": "header",
+        "content": "All Spacing????"
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Amount of Bottom Margin",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "All Padding????"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding Top",
+        "default": 10
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding Bottom",
+        "default": 10
+      }
+    ]
+  }
+  {% endschema %}
