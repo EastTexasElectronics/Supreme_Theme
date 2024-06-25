@@ -135,8 +135,12 @@
 
 {% schema %}
   {
-    "name": "Header (Navbar)",
+    "name": "Header (Navigation Bar)",
     "settings": [
+      {
+        "type": "header",
+        "content": "Section Guide: basetheme.etxelectronics.com/header"
+      },
       {
         "type": "text",
         "id": "mobile_menu_title",
@@ -149,7 +153,17 @@
         "id": "menu",
         "label": "Header Menu",
         "default": "main-menu",
-        "info": "This is the main menu that appears in the mobile menu."
+        "info": "Select the navigation menu to use in the primary header."
+      },
+      {
+        "type": "header",
+        "content": "Title/Logo Settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo",
+        "info": "Upload a logo to use in the header."
       },
       {
         "type": "select",
@@ -157,20 +171,44 @@
         "options": [
           {
             "value": "left",
-            "label": "On the Left Side"
+            "label": "Left Side"
           },
           {
             "value": "center",
-            "label": "In the Middle"
+            "label": "Centered"
           },
           {
             "value": "right",
-            "label": "On the Right Side"
+            "label": "Right Side"
           }
         ],
         "default": "center",
         "label": "Logo/Title Position",
         "info": "Set the position of the logo/title in the header."
+      },
+      {
+        "type": "select",
+        "id": "mobile_logo_position",
+        "options": [
+          {
+            "value": "center",
+            "label": "Centered"
+          },
+          {
+            "value": "left",
+            "label": "Left Side"
+          },
+          {
+            "value": "right",
+            "label": "Right Side"
+          }
+        ],
+        "default": "center",
+        "label": "Mobile Logo Position"
+      },
+      {
+        "type": "header",
+        "content": "Functionality Settings"
       },
       {
         "type": "select",
@@ -191,7 +229,7 @@
         ],
         "default": "dropdown",
         "label": "Desktop Menu Type",
-        "info": "Set the type of menu for the desktop version of the header."
+        "info": "Set the navigation menu type."
       },
       {
         "type": "select",
@@ -224,29 +262,10 @@
         "default": false,
         "label": "Enable the Country Selector in the Header"
       },
-      {
-        "type": "select",
-        "id": "mobile_logo_position",
-        "options": [
-          {
-            "value": "center",
-            "label": "Logo is centered"
-          },
-          {
-            "value": "left",
-            "label": "Logo is on the left side"
-          },
-          {
-            "value": "right",
-            "label": "Logo is on the right side"
-          }
-        ],
-        "default": "center",
-        "label": "Mobile Logo Position"
-      },
+
       {
         "type": "header",
-        "content": "All Spacing????"
+        "content": "Spacing Settings"
       },
       {
         "type": "range",
@@ -255,12 +274,8 @@
         "max": 100,
         "step": 1,
         "unit": "px",
-        "label": "Amount of Bottom Margin",
+        "label": "Bottom Margin",
         "default": 0
-      },
-      {
-        "type": "header",
-        "content": "All Padding????"
       },
       {
         "type": "range",
