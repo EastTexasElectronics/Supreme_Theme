@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center py-6 md:justify-start md:space-x-10">
       {% comment %} Name and or Logo {% endcomment %}
       <div class="flex justify-start lg:flex-1">
-        {% if settings.header_logo %}
+        {% if settings.header_logo != blank %}
           <img
             src="{{ settings.header_logo | image_url: '200x' }}"
             alt="{{ shop.name }}"
@@ -244,73 +244,73 @@
     },
     {
       "type": "select",
-        "id": "sticky_header",
-        "options": [
-          {
-            "value": "none",
-            "label": "Header is not sticky"
-          },
-          {
-            "value": "on-scroll-up",
-            "label": "Header is sticky when scrolling up"
-          },
-          {
-            "value": "always",
-            "label": "Header is always sticky"
-          },
-          {
-            "value": "reduce-logo-size",
-            "label": "Reduce logo size when scrolling up"
-          }
-        ],
-        "default": "on-scroll-up",
-        "label": "Sticky Header",
-        "info": "Select how the header should behave when the user scrolls."
-      },
-      {
-        "type": "checkbox",
-        "id": "enable_country_selector",
-        "default": false,
-        "label": "Enable the Country Selector. Requires localization to be setup."
-      },
-      {
-        "type": "header",
-        "content": "Margin Settings (Space Around)"
-      },
-      {
-        "type": "range",
-        "id": "margin_bottom",
-        "min": 0,
-        "max": 100,
-        "step": 1,
-        "unit": "px",
-        "label": "Bottom Margin",
-        "default": 0
-      },
-      {
-        "type": "header",
-        "content": "Padding Settings (Space Between)"
-      },
-      {
-        "type": "range",
-        "id": "padding_top",
-        "min": 0,
-        "max": 50,
-        "step": 1,
-        "unit": "px",
-        "label": "Padding Top",
-        "default": 10
-      },
-      {
-        "type": "range",
-        "id": "padding_bottom",
-        "min": 0,
-        "max": 50,
-        "step": 1,
-        "unit": "px",
-        "label": "Padding Bottom",
-        "default": 10
-      }
-    ]
-  }
+      "id": "sticky_header",
+      "options": [
+        {
+          "value": "none",
+          "label": "Header is not sticky"
+        },
+        {
+          "value": "on-scroll-up",
+          "label": "Header is sticky when scrolling up"
+        },
+        {
+          "value": "always",
+          "label": "Header is always sticky"
+        },
+        {
+          "value": "reduce-logo-size",
+          "label": "Reduce logo size when scrolling up"
+        }
+      ],
+      "default": "on-scroll-up",
+      "label": "Sticky Header",
+      "info": "Select how the header should behave when the user scrolls."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "default": false,
+      "label": "Enable the Country Selector. Requires localization to be setup."
+    },
+    {
+      "type": "header",
+      "content": "Margin Settings (Space Around)"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Bottom Margin",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Padding Settings (Space Between)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 10
+    }
+  ]
+}
 {% endschema %}
