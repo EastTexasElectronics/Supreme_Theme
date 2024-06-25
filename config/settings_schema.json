@@ -1,3 +1,200 @@
 [
-
+  {
+    "name": "Header Settings",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "header_logo",
+        "label": "Header Logo",
+        "info": "Upload an image to replace the default shop name in the header."
+      },
+      {
+        "type": "text",
+        "id": "mobile_menu_title",
+        "label": "Mobile Menu Title",
+        "default": "Menu",
+        "info": "This is the title that appears in the mobile menu when opened."
+      },
+      {
+        "type": "link_list",
+        "id": "menu",
+        "label": "Header Menu",
+        "default": "main-menu",
+        "info": "Select the navigation menu to use in the primary header."
+      },
+      {
+        "type": "select",
+        "id": "logo_position",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left Side"
+          },
+          {
+            "value": "center",
+            "label": "Centered"
+          },
+          {
+            "value": "right",
+            "label": "Right Side"
+          }
+        ],
+        "default": "center",
+        "label": "Desktop Logo/Title Position",
+        "info": "Select the position of the logo/title in the Desktop Header."
+      },
+      {
+        "type": "select",
+        "id": "mobile_logo_position",
+        "options": [
+          {
+            "value": "center",
+            "label": "Centered"
+          },
+          {
+            "value": "left",
+            "label": "Left Side"
+          },
+          {
+            "value": "right",
+            "label": "Right Side"
+          }
+        ],
+        "default": "center",
+        "label": "Mobile Logo Position",
+        "info": "Select the position of the logo/title in the Mobile Header."
+      },
+      {
+        "type": "select",
+        "id": "desktop_menu_selection",
+        "options": [
+          {
+            "value": "dropdown",
+            "label": "Dropdown Menu"
+          },
+          {
+            "value": "mega",
+            "label": "Mega Menu"
+          },
+          {
+            "value": "drawer",
+            "label": "Drawer Menu"
+          }
+        ],
+        "default": "dropdown",
+        "label": "Desktop Menu Type",
+        "info": "Set the navigation menu type."
+      },
+      {
+        "type": "select",
+        "id": "sticky_header",
+        "options": [
+          {
+            "value": "none",
+            "label": "Header is not sticky"
+          },
+          {
+            "value": "on-scroll-up",
+            "label": "Header is sticky when scrolling up"
+          },
+          {
+            "value": "always",
+            "label": "Header is always sticky"
+          },
+          {
+            "value": "reduce-logo-size",
+            "label": "Reduce logo size when scrolling up"
+          }
+        ],
+        "default": "on-scroll-up",
+        "label": "Sticky Header",
+        "info": "Select how the header should behave when the user scrolls."
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_country_selector",
+        "default": false,
+        "label": "Enable the Country Selector. Requires localization to be setup."
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Bottom Margin",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding Top",
+        "default": 10
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding Bottom",
+        "default": 10
+      }
+    ]
+  },
+  {
+    "name": "Footer Settings",
+    "settings": [
+      {
+        "type": "text",
+        "id": "footer_text",
+        "label": "Footer Text",
+        "default": "Copyright © {{ current.year }} {{ shop.name }} All rights reserved.",
+        "info": "This is the text that appears in the footer."
+      },
+      {
+        "type": "link_list",
+        "id": "footer_links",
+        "label": "Footer Links",
+        "default": "main-menu",
+        "info": "Select the navigation menu to use in the footer."
+      },
+      {
+        "type": "range",
+        "id": "footer_margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Footer Margin Bottom",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "footer_padding_top",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Footer Padding Top",
+        "default": 10
+      },
+      {
+        "type": "range",
+        "id": "footer_padding_bottom",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Footer Padding Bottom",
+        "default": 10
+      }
+    ]       
+  }
 ]
