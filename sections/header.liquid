@@ -4,14 +4,8 @@
     <div class="flex justify-between items-center py-6 md:justify-start md:space-x-10">
       <!-- NAME or LOGO -->
       <div class="flex justify-start lg:flex-1 truncate">
-        {% if settings.logo_image != blank %}
-          <img
-            src="{{ settings.logo_image | image_url: width: 300 }}"
-            alt="{{ shop.name }}"
-            class="h-8 w-auto"
-            width="300"
-            height="auto"
-          >
+        {% if settings.logo_image %}
+          <img src="{{ settings.logo_image | image_url: width: 300 }}" alt="{{ shop.name }}" class="h-8 w-auto" width="300" height="auto">
         {% else %}
           <h1 class="text-xl font-bold truncate">{{ shop.name }}</h1>
         {% endif %}
@@ -179,7 +173,7 @@
 
 {% schema %}
 {
-  "name": "Header (Navbar)",
+  "name": "Header (Navigation Bar)",
   "settings": [
     {
       "type": "text",
@@ -193,12 +187,12 @@
       "id": "menu",
       "label": "Header Menu",
       "default": "main-menu",
-      "info": "This is the main menu that appears in the desktop menu."
+      "info": "This is the main menu that appears in the mobile menu."
     },
     {
       "type": "image_picker",
       "id": "image_with_text_image",
-      "label": "Image (Logo)"
+      "label": "Image"
     },
     {
       "type": "select",
@@ -207,54 +201,16 @@
       "options": [
         {
           "value": "left",
-          "label": "Logo/Name are on the left side"
+          "label": "Logo/Name are on the left"
         },
         {
           "value": "centered",
           "label": "Logo/Name are centered"
         }
       ],
-      "default": "centered",
-      "info": "Select the layout for the desktop header."
+      "default": "left",
+      "info": "Select the layout for the header."
     }
   ]
 }
 {% endschema %}
-
-<style>
-  .header {
-    padding: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px 3rem {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px 3rem;
-  }
-
-  .section-header {
-    position: sticky; /* This is for fixing a Safari z-index issue. PR #2147 */
-    margin-bottom: {{ section.settings.margin_bottom | times: 0.75 | round: 0 }}px;
-  }
-
-  @media screen and (min-width: 750px) {
-    .section-header {
-      margin-bottom: {{ section.settings.margin_bottom }}px;
-    }
-  }
-
-  @media screen and (min-width: 990px) {
-    .header {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
-  }
-</style>
-
-<script>
-  document.addEventListener('alpine:init', () => {
-    Alpine.data('menu', () => ({
-      open: false,
-      toggle() {
-        this.open = !this.open;
-      },
-      close() {
-        this.open = false;
-      },
-    }));
-  });
-</script>
