@@ -1,12 +1,22 @@
 <div x-data="{ mobileMenuOpen: false }" class="relative bg-white">
   <div class="mx-auto px-4 sm:px-6">
     <div class="flex justify-between items-center py-6 md:justify-start md:space-x-10">
-      <!-- NAME or LOGO -->
-      <div class="flex justify-start lg:flex-1 truncate">
-        <h1 class="text-xl font-bold truncate">{{ shop.name }}</h1>
+      {% comment %} Name and or Logo {% endcomment %}
+      <div class="flex justify-start lg:flex-1">
+        {% if settings.header_logo %}
+          <img
+            src="{{ settings.header_logo | image_url: '200x' }}"
+            alt="{{ shop.name }}"
+            class="h-10 w-auto"
+            width="200"
+            height="auto"
+          >
+        {% else %}
+          <h1 class="text-xl font-bold">{{ shop.name }}</h1>
+        {% endif %}
       </div>
 
-      <!-- MOBILE HAMBURGER BUTTON -->
+      {% comment %} Mobile Hamburger Button {% endcomment %}
       <div class="-mr-2 -my-2 ml-3 md:hidden">
         <button
           x-on:click="mobileMenuOpen = true"
@@ -17,7 +27,7 @@
         </button>
       </div>
 
-      <!-- NAVIGATION MENU -->
+      {% comment %} Desktop Navigation Menu {% endcomment %}
       <nav
         x-data="{ open: false }"
         class="hidden md:flex space-x-10"
@@ -57,7 +67,7 @@
         {% endfor %}
       </nav>
 
-      <!-- BUTTONS -->
+      {% comment %} Buttons {% endcomment %}
       <div class="hidden md:flex items-center justify-end md:flex-1 space-x-5">
         <a href="{{ routes.cart_url }}" class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900">
           {% render 'icon-shopping-bag', size: 6 %}
@@ -70,11 +80,11 @@
     </div>
   </div>
 
-  <!-- MOBILE NAVIGATION MENU -->
+  {% comment %} Mobile Navigation Menu {% endcomment %}
   <div x-show="mobileMenuOpen" class="absolute z-10 top-0 inset-x-0 p-2 transform origin-top-left md:hidden">
     <div class="shadow-lg rounded-lg ring-1 ring-black ring-opacity-5 bg-white w-full">
       <div class="p-5 divide-y-2 divide-gray-50">
-        <!-- MOBILE MENU HEADER TITLE PLUS CLOSE BUTTON -->
+        {% comment %} Mobile Menu Header Title + Close Button {% endcomment %}
         <div class="flex items-center justify-between pb-3">
           <div>
             <h1 class="text-lg text-gray-500">{{ section.settings.mobile_menu_title }}</h1>
@@ -90,7 +100,7 @@
           </div>
         </div>
 
-        <!-- NAVIGATION LINKS FOR MOBILE MENU -->
+        {% comment %} Navigation Links for Mobile Menu {% endcomment %}
         <div class="pt-3">
           <nav class="grid gap-y-7">
             {% for link in linklists['main-menu'].links %}
@@ -134,169 +144,173 @@
 </div>
 
 {% schema %}
-  {
-    "name": "Header (Navigation Bar)",
-    "settings": [
-      {
-        "type": "header",
-        "content": "Section Guide: basetheme.etxelectronics.com/header"
-      },
-      {
-        "type": "text",
-        "id": "mobile_menu_title",
-        "label": "Title",
-        "default": "Menu",
-        "info": "This is the title that appears in the mobile menu."
-      },
-      {
-        "type": "link_list",
-        "id": "menu",
-        "label": "Header Menu",
-        "default": "main-menu",
-        "info": "Select the navigation menu to use in the primary header."
-      },
-      {
-        "type": "header",
-        "content": "Title/Logo Settings"
-      },
-      {
-        "type": "image_picker",
-        "id": "logo",
-        "label": "Logo",
-        "info": "Upload a logo to use in the header."
-      },
-      {
-        "type": "select",
-        "id": "logo_position",
-        "options": [
-          {
-            "value": "left",
-            "label": "Left Side"
-          },
-          {
-            "value": "center",
-            "label": "Centered"
-          },
-          {
-            "value": "right",
-            "label": "Right Side"
-          }
-        ],
-        "default": "center",
-        "label": "Logo/Title Position",
-        "info": "Set the position of the logo/title in the header."
-      },
-      {
-        "type": "select",
-        "id": "mobile_logo_position",
-        "options": [
-          {
-            "value": "center",
-            "label": "Centered"
-          },
-          {
-            "value": "left",
-            "label": "Left Side"
-          },
-          {
-            "value": "right",
-            "label": "Right Side"
-          }
-        ],
-        "default": "center",
-        "label": "Mobile Logo Position"
-      },
-      {
-        "type": "header",
-        "content": "Functionality Settings"
-      },
-      {
-        "type": "select",
-        "id": "desktop_menu_selection",
-        "options": [
-          {
-            "value": "dropdown",
-            "label": "Dropdown Menu"
-          },
-          {
-            "value": "mega",
-            "label": "Mega Menu"
-          },
-          {
-            "value": "drawer",
-            "label": "Drawer Menu"
-          }
-        ],
-        "default": "dropdown",
-        "label": "Desktop Menu Type",
-        "info": "Set the navigation menu type."
-      },
-      {
-        "type": "select",
-        "id": "sticky_header",
-        "options": [
-          {
-            "value": "none",
-            "label": "Header is not sticky"
-          },
-          {
-            "value": "on-scroll-up",
-            "label": "Header is sticky when scrolling up"
-          },
-          {
-            "value": "always",
-            "label": "Header is always sticky"
-          },
-          {
-            "value": "reduce-logo-size",
-            "label": "Reduce logo size when scrolling up"
-          }
-        ],
-        "default": "on-scroll-up",
-        "label": "Sticky Header",
-        "info": "Set the type of sticky header for the desktop version of the header."
-      },
-      {
-        "type": "checkbox",
-        "id": "enable_country_selector",
-        "default": false,
-        "label": "Enable the Country Selector in the Header"
-      },
-
-      {
-        "type": "header",
-        "content": "Spacing Settings"
-      },
-      {
-        "type": "range",
-        "id": "margin_bottom",
-        "min": 0,
-        "max": 100,
-        "step": 1,
-        "unit": "px",
-        "label": "Bottom Margin",
-        "default": 0
-      },
-      {
-        "type": "range",
-        "id": "padding_top",
-        "min": 0,
-        "max": 50,
-        "step": 1,
-        "unit": "px",
-        "label": "Padding Top",
-        "default": 10
-      },
-      {
-        "type": "range",
-        "id": "padding_bottom",
-        "min": 0,
-        "max": 50,
-        "step": 1,
-        "unit": "px",
-        "label": "Padding Bottom",
-        "default": 10
-      }
-    ]
-  }
-  {% endschema %}
+{
+  "name": "Header (Navigation Bar)",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Guide: <URL>"
+    },
+    {
+      "type": "text",
+      "id": "mobile_menu_title",
+      "label": "Title",
+      "default": "Menu",
+      "info": "This is the title that appears in the mobile menu when opened."
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Header Menu",
+      "default": "main-menu",
+      "info": "Select the navigation menu to use in the primary header."
+    },
+    {
+      "type": "header",
+      "content": "Title/Logo Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo",
+      "info": "Upload an image to replace the default shop name in the header. Suggested image size of 150x50 pixels."
+    },
+    {
+      "type": "select",
+      "id": "logo_position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left Side"
+        },
+        {
+          "value": "center",
+          "label": "Centered"
+        },
+        {
+          "value": "right",
+          "label": "Right Side"
+        }
+      ],
+      "default": "center",
+      "label": "Desktop Logo/Title Position",
+      "info": "Select the position of the logo/title in the Desktop Header."
+    },
+    {
+      "type": "select",
+      "id": "mobile_logo_position",
+      "options": [
+        {
+          "value": "center",
+          "label": "Centered"
+        },
+        {
+          "value": "left",
+          "label": "Left Side"
+        },
+        {
+          "value": "right",
+          "label": "Right Side"
+        }
+      ],
+      "default": "center",
+      "label": "Mobile Logo Position",
+      "info": "Select the position of the logo/title in the Mobile Header."
+    },
+    {
+      "type": "header",
+      "content": "Functionality Settings"
+    },
+    {
+      "type": "select",
+      "id": "desktop_menu_selection",
+      "options": [
+        {
+          "value": "dropdown",
+          "label": "Dropdown Menu"
+        },
+        {
+          "value": "mega",
+          "label": "Mega Menu"
+        },
+        {
+          "value": "drawer",
+          "label": "Drawer Menu"
+        }
+      ],
+      "default": "dropdown",
+      "label": "Desktop Menu Type",
+      "info": "Set the navigation menu type."
+    },
+    {
+      "type": "select",
+      "id": "sticky_header",
+      "options": [
+        {
+          "value": "none",
+          "label": "Header is not sticky"
+        },
+        {
+          "value": "on-scroll-up",
+          "label": "Header is sticky when scrolling up"
+        },
+        {
+          "value": "always",
+          "label": "Header is always sticky"
+        },
+        {
+          "value": "reduce-logo-size",
+          "label": "Reduce logo size when scrolling up"
+        }
+      ],
+      "default": "on-scroll-up",
+      "label": "Sticky Header",
+      "info": "Select how the header should behave when the user scrolls."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "default": false,
+      "label": "Enable the Country Selector. Requires localization to be setup."
+    },
+    {
+      "type": "header",
+      "content": "Margin Settings (Space Around)"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Bottom Margin",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Padding Settings (Space Between)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 10
+    }
+  ]
+}
+{% endschema %}
