@@ -9,6 +9,7 @@
 */
 {
   "current": {
+    "header_logo": "shopify:\/\/shop_images\/classic-neon-open-sign.jpg",
     "sections": {
       "header": {
         "type": "header",
