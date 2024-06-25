@@ -616,6 +616,10 @@ video {
   position: relative;
 }
 
+.sticky {
+  position: sticky;
+}
+
 .inset-x-0 {
   left: 0px;
   right: 0px;
@@ -781,6 +785,10 @@ video {
 
 .resize {
   resize: both;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
 }
 
 .items-start {
