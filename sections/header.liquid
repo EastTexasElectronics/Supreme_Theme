@@ -1,14 +1,14 @@
 {% assign main_menu_linklist = linklists[settings.menu].links %}
-<div x-data="{ mobileMenuOpen: false }" class="relative bg-white">
+<div
+  x-data="{ mobileMenuOpen: false }"
+  class="relative bg-white {% if settings.sticky_header != 'none' %}sticky top-0 z-50{% if settings.sticky_header == 'always' %} bg-opacity-75{% elsif settings.sticky_header == 'reduce-logo-size' %} bg-opacity-75{% endif %}{% endif %}"
+  style="margin-bottom: {{ settings.margin_bottom }}px; padding-top: {{ settings.padding_top }}px; padding-bottom: {{ settings.padding_bottom }}px;"
+>
   <div class="mx-auto px-4 sm:px-6">
     <div class="flex justify-between items-center py-6 md:justify-start md:space-x-10">
       <!-- NAME or LOGO -->
-      <div class="flex justify-start lg:flex-1 truncate">
-        {% if settings.logo_image %}
-          <img src="{{ settings.logo_image | image_url: width: 300 }}" alt="{{ shop.name }}" class="h-8 w-auto" width="300" height="auto">
-        {% else %}
-          <h1 class="text-xl font-bold truncate">{{ shop.name }}</h1>
-        {% endif %}
+      <div class="flex justify-start {% if settings.logo_position == 'center' %}lg:flex-1 justify-center{% elsif settings.logo_position == 'right' %}lg:flex-1 justify-end{% else %}lg:flex-1{% endif %} truncate">
+        <h1 class="text-xl font-bold truncate">{{ shop.name }}</h1>
       </div>
 
       <!-- MOBILE HAMBURGER BUTTON -->
@@ -17,42 +17,37 @@
           x-on:click="mobileMenuOpen = true"
           type="button"
           class="bg-white p-2 inline-flex items-center justify-center focus:outline-none"
-          aria-label="Open menu"
         >
           {% render 'icon-hamburger-menu', size: 5 %}
         </button>
       </div>
 
       <!-- NAVIGATION MENU -->
-      <nav class="hidden md:flex space-x-10">
-        {% for link in main_menu_linklist %}
-          {% if link.links %}
-            <div x-data="{ open: false }" class="relative">
+      <nav
+        x-data="{ open: false }"
+        class="hidden md:flex space-x-10"
+      >
+        {% if settings.desktop_menu_selection == 'mega' %}
+          <!-- Mega Menu Implementation -->
+          {% for link in main_menu_linklist %}
+            <div class="relative">
               <button
                 x-on:click="open = ! open"
                 type="button"
                 class="inline-flex items-center text-base text-gray-500 hover:text-gray-900"
-                aria-expanded="false"
-                aria-controls="submenu-{{ forloop.index }}"
               >
                 {{ link.title }}
                 {% render 'icon-chevron-down', size: 3 %}
               </button>
               <div
                 x-show="open"
-                x-on:click.away="open = false"
+                @click.away="open = false"
                 class="absolute z-10 -ml-5 mt-5 transform px-2 w-screen max-w-md sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2"
-                id="submenu-{{ forloop.index }}"
-                role="menu"
               >
                 <div class="shadow-lg border ring-black ring-opacity-5 overflow-hidden rounded-lg">
                   <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                     {% for sublink in link.links %}
-                      <a
-                        href="{{ sublink.url }}"
-                        class="-m-3 p-3 flex items start rounded-lg hover:bg-gray-100"
-                        role="menuitem"
-                      >
+                      <a href="{{ sublink.url }}" class="-m-3 p-3 flex items start rounded-lg hover:bg-gray-100">
                         <div class="ml-4">
                           <p class="text-gray-900 text-base font-medium">{{ sublink.title }}</p>
                         </div>
@@ -62,43 +57,103 @@
                 </div>
               </div>
             </div>
-          {% else %}
-            <a href="{{ link.url }}" class="text-base text-gray-500 hover:text-gray-900">{{ link.title }}</a>
-          {% endif %}
-        {% endfor %}
+          {% endfor %}
+        {% elsif settings.desktop_menu_selection == 'drawer' %}
+          <!-- Drawer Menu Implementation -->
+          <div x-data="{ drawerOpen: false }" class="relative">
+            <button
+              x-on:click="drawerOpen = ! drawerOpen"
+              type="button"
+              class="inline-flex items-center text-base text-gray-500 hover:text-gray-900"
+            >
+              Menu
+              {% render 'icon-chevron-down', size: 3 %}
+            </button>
+            <div
+              x-show="drawerOpen"
+              @click.away="drawerOpen = false"
+              class="fixed inset-0 z-40 overflow-hidden"
+            >
+              <div class="absolute inset-0 bg-gray-600 opacity-75"></div>
+              <div class="relative bg-white shadow-xl transform transition-all">
+                <div class="relative p-5">
+                  <div class="grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
+                    {% for link in main_menu_linklist %}
+                      <a href="{{ link.url }}" class="-m-3 p-3 flex items start rounded-lg hover:bg-gray-100">
+                        <div class="ml-4">
+                          <p class="text-gray-900 text-base font-medium">{{ link.title }}</p>
+                        </div>
+                      </a>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% else %}
+          <!-- Default Dropdown Menu -->
+          {% for link in main_menu_linklist %}
+            {% if link.links != blank %}
+              <div class="relative">
+                <button
+                  x-on:click="open = ! open"
+                  type="button"
+                  class="inline-flex items-center text-base text-gray-500 hover:text-gray-900"
+                >
+                  {{ link.title }}
+                  {% render 'icon-chevron-down', size: 3 %}
+                </button>
+                <div
+                  x-show="open"
+                  @click.away="open = false"
+                  class="absolute z-10 -ml-5 mt-5 transform px-2 w-screen max-w-md sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2"
+                >
+                  <div class="shadow-lg border ring-black ring-opacity-5 overflow-hidden rounded-lg">
+                    <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
+                      {% for sublink in link.links %}
+                        <a href="{{ sublink.url }}" class="-m-3 p-3 flex items start rounded-lg hover:bg-gray-100">
+                          <div class="ml-4">
+                            <p class="text-gray-900 text-base font-medium">{{ sublink.title }}</p>
+                          </div>
+                        </a>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% else %}
+              <a href="{{ link.url }}" class="text-base text-gray-500 hover:text-gray-900">{{ link.title }}</a>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
       </nav>
+
+      {% comment %}
+        <!-- COUNTRY SELECTOR -->
+        {% if settings.enable_country_selector %}
+          <div class="hidden md:flex items-center justify-end md:flex-1 space-x-5">
+            <div>
+              {% render 'country-selector' %}
+            </div>
+          </div>
+        {% endif %}
+      {% endcomment %}
 
       <!-- BUTTONS -->
       <div class="hidden md:flex items-center justify-end md:flex-1 space-x-5">
-        <a
-          href="{{ routes.cart_url }}"
-          class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900"
-          aria-label="Cart"
-        >
+        <a href="{{ routes.cart_url }}" class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900">
           {% render 'icon-shopping-bag', size: 6 %}
         </a>
-        <a
-          href="{{ routes.account_login_url }}"
-          class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900"
-          aria-label="Login"
-        >
+        <a href="{{ routes.account_login_url }}" class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900">
           Login
         </a>
-        <a
-          href="{{ routes.account_register_url }}"
-          class="text-base text-gray-500 hover:text-gray-900"
-          aria-label="Register"
-        >Register</a>
+        <a href="{{ routes.account_register_url }}" class="text-base text-gray-500 hover:text-gray-900">Register</a>
       </div>
     </div>
   </div>
 
   <!-- MOBILE NAVIGATION MENU -->
-  <div
-    x-show="mobileMenuOpen"
-    x-on:click.away="mobileMenuOpen = false"
-    class="absolute z-10 top-0 inset-x-0 p-2 transform origin-top-left md:hidden"
-  >
+  <div x-show="mobileMenuOpen" class="absolute z-10 top-0 inset-x-0 p-2 transform origin-top-left md:hidden">
     <div class="shadow-lg rounded-lg ring-1 ring-black ring-opacity-5 bg-white w-full">
       <div class="p-5 divide-y-2 divide-gray-50">
         <!-- MOBILE MENU HEADER TITLE PLUS CLOSE BUTTON -->
@@ -111,7 +166,6 @@
               x-on:click="mobileMenuOpen = false"
               type="button"
               class="bg-white rounded-md p-2 text-gray-500"
-              aria-label="Close menu"
             >
               {% render 'icon-close', size: 3 %}
             </button>
@@ -123,31 +177,22 @@
           <nav class="grid gap-y-7">
             {% for link in main_menu_linklist %}
               {% assign link_handle = link.handle | replace: '-', '_' %}
-              {% if link.links %}
+              {% if link.links != blank %}
                 <div x-data="{ {{ link_handle }}: false }" class="relative">
                   <button
                     x-on:click="{{ link_handle }} = ! {{ link_handle }}"
                     type="button"
                     class="text-base text-gray-500 hover:text-gray-900 flex items-center justify-between w-full"
-                    aria-expanded="false"
-                    aria-controls="submenu-{{ forloop.index }}"
                   >
                     <div>{{ link.title }}</div>
                     {% render 'icon-chevron-down', size: 3 %}
                   </button>
 
-                  <div
-                    x-show="{{ link_handle }}"
-                    x-on:click.away="{{ link_handle }} = false"
-                    class="grid gap-y-7 py-3"
-                    id="submenu-{{ forloop.index }}"
-                    role="menu"
-                  >
+                  <div x-show="{{ link_handle }}" class="grid gap-y-7 py-3">
                     {% for sublink in link.links %}
                       <a
                         href="{{ sublink.url }}"
                         class="-m-3 p-3 mt-2 flex items-center rounded-md text-gray-500 hover:text-gray-900 hover:bg-gray-50"
-                        role="menuitem"
                       >
                         <span class="ml-3 text-base font-medium text-gray-500">{{ sublink.title }}</span>
                       </a>
@@ -172,44 +217,152 @@
 
 {% schema %}
 {
-  "name": "Header (Navigation Bar)",
+  "name": "Header (Navbar)",
   "settings": [
     {
       "type": "text",
       "id": "mobile_menu_title",
       "label": "Title",
       "default": "Menu",
-      "info": "This is the title that appears in the mobile menu."
+      "info": "This is the title that appears in the mobile menu. <a href=\"https://github.com/Shopify/themekit/blob/master/docs/building-your-theme/sections/header.md#mobile-menu-title\" target=\"_blank\">Learn More</a>"
     },
     {
       "type": "link_list",
       "id": "menu",
       "label": "Header Menu",
       "default": "main-menu",
-      "info": "This is the main menu that appears in the mobile menu."
-    },
-    {
-      "type": "image_picker",
-      "id": "logo_image",
-      "label": "Logo Image",
-      "info": "Upload an image to use as the logo."
+      "info": "This is the main menu that appears in the mobile menu. <a href=\"https://github.com/Shopify/themekit/blob/master/docs/building-your-theme/sections/header.md#header-menu\" target=\"_blank\">Learn More</a>"
     },
     {
       "type": "select",
-      "id": "header_layout",
-      "label": "Header Layout",
+      "id": "logo_position",
       "options": [
         {
           "value": "left",
-          "label": "Logo/Name on the left"
+          "label": "On the Left Side"
         },
         {
-          "value": "centered",
-          "label": "Logo/Name centered"
+          "value": "center",
+          "label": "In the Middle"
+        },
+        {
+          "value": "right",
+          "label": "On the Right Side"
         }
       ],
-      "default": "left",
-      "info": "Select the layout for the header."
+      "default": "center",
+      "label": "Logo/Title Position",
+      "info": "Set the position of the logo/title in the header. <a href=\"https://github.com/Shopify/themekit/blob/master/docs/building-your-theme/sections/header.md#logotitle-position\" target=\"_blank\">Learn More</a>"
+    },
+    {
+      "type": "select",
+      "id": "desktop_menu_selection",
+      "options": [
+        {
+          "value": "dropdown",
+          "label": "Dropdown Menu"
+        },
+        {
+          "value": "mega",
+          "label": "Mega Menu"
+        },
+        {
+          "value": "drawer",
+          "label": "Drawer Menu"
+        }
+      ],
+      "default": "dropdown",
+      "label": "Desktop Menu Type",
+      "info": "Set the type of menu for the desktop version of the header. <a href=\"https://github.com/Shopify/themekit/blob/master/docs/building-your-theme/sections/header.md#desktop-menu-type\" target=\"_blank\">Learn More</a>"
+    },
+    {
+      "type": "select",
+      "id": "sticky_header",
+      "options": [
+        {
+          "value": "none",
+          "label": "Header is not sticky"
+        },
+        {
+          "value": "on-scroll-up",
+          "label": "Header is sticky when scrolling up"
+        },
+        {
+          "value": "always",
+          "label": "Header is always sticky"
+        },
+        {
+          "value": "reduce-logo-size",
+          "label": "Reduce logo size when scrolling up"
+        }
+      ],
+      "default": "on-scroll-up",
+      "label": "Sticky Header",
+      "info": "Set the type of sticky header for the desktop version of the header. <a href=\"https://github.com/Shopify/themekit/blob/master/docs/building-your-theme/sections/header.md#sticky-header\" target=\"_blank\">Learn More</a>"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "default": false,
+      "label": "Enable the Country Selector in the Header"
+    },
+    {
+      "type": "select",
+      "id": "mobile_logo_position",
+      "options": [
+        {
+          "value": "center",
+          "label": "Logo is centered"
+        },
+        {
+          "value": "left",
+          "label": "Logo is on the left side"
+        },
+        {
+          "value": "right",
+          "label": "Logo is on the right side"
+        }
+      ],
+      "default": "center",
+      "label": "Mobile Logo Position"
+    },
+    {
+      "type": "header",
+      "content": "All Spacing????"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Amount of Bottom Margin",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "All Padding????"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 10
     }
   ]
 }
