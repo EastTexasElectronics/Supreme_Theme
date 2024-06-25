@@ -734,6 +734,10 @@ video {
   height: 1.5rem;
 }
 
+.h-8 {
+  height: 2rem;
+}
+
 .w-6 {
   width: 1.5rem;
 }
@@ -777,6 +781,10 @@ video {
 
 .resize {
   resize: both;
+}
+
+.items-start {
+  align-items: flex-start;
 }
 
 .items-center {
@@ -1078,6 +1086,10 @@ video {
 }
 
 @media (min-width: 640px) {
+  .sm\:h-10 {
+    height: 2.5rem;
+  }
+
   .sm\:gap-8 {
     gap: 2rem;
   }
